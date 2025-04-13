@@ -1,7 +1,5 @@
-from flask import Flask, request, jsonify, send_file
+from flask import request, jsonify, send_file
 import io
-
-app = Flask(__name__)
 
 class Controller():
     def __init__(self, app_instance):
@@ -32,5 +30,3 @@ class Controller():
 
     def run(self):
         self._app.run(host='0.0.0.0')
-
-controller = Controller(app)
