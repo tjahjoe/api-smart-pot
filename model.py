@@ -42,4 +42,5 @@ class Model():
         df = pd.json_normalize(raw_data) 
 
         df = df[['data.ph', 'data.soil']].iloc[::-1]  
+
         return df.rename(columns={'data.ph': 'ph', 'data.soil': 'soil'}).to_dict(orient='records')
