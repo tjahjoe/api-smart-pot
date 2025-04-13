@@ -9,6 +9,7 @@ class Controller():
 
         self._app.add_url_rule('/post/image', view_func=self._post_image, methods=['POST'])
         self._app.add_url_rule('/get/image', view_func=self._get_image, methods=['GET'])
+        self._app.add_url_rule('/', view_func=self._tes, methods=['GET'])
 
     def _post_image(self):
         try:
@@ -22,7 +23,13 @@ class Controller():
             return send_file(io.BytesIO(self.__image), mimetype='image/jpeg')
         except Exception as e:
             return str(e), 500
-
+        
+    def _tes(self):
+        try:
+            return jsonify({'message': 'Data saved successfully'}), 201
+        except Exception as e:
+            return str(e), 500
+        
     # def _insert_data(self):
     #     try:
     #         data = request.get_json()
