@@ -1,14 +1,18 @@
 from flask import request, jsonify, send_file
 from model import Model
+from cloudinary_handler import CloudinaryHandler
 import io
+import requests
 
-class Controller():
+class Controller:
     def __init__(self, app_instance):
         self._app = app_instance
-        self.__model = Model()
+        self.__db_model = Model()
+        self.__cloudinary = CloudinaryHandler()
 
-        self.__image = ''
+        self._setup_routes()
 
+    def _setup_routes(self):
         self._app.add_url_rule('/post/image', view_func=self._post_image, methods=['POST'])
         self._app.add_url_rule('/get/image', view_func=self._get_image, methods=['GET'])
         self._app.add_url_rule('/insert/data', view_func=self._insert_data, methods=['POST'])
@@ -16,32 +20,44 @@ class Controller():
 
     def _post_image(self):
         try:
-            self.__image = request.data
-            return jsonify({"message": "Image received successfully!"}), 200
+            image_bytes = request.data
+
+            url = self.__cloudinary.upload_image(image_bytes)
+
+            return jsonify({"message": "Image processed and uploaded successfully!", "url": url}), 200
+
         except Exception as e:
             return str(e), 500
 
     def _get_image(self):
         try:
-            return send_file(io.BytesIO(self.__image), mimetype='image/jpeg')
+            image_url = "https://res.cloudinary.com/dkozkdqen/image/upload/1"
+
+            response = requests.get(image_url)
+            
+            if response.status_code == 200:
+                return send_file(io.BytesIO(response.content), mimetype='image/jpeg')
+            else:
+                return jsonify({"message": "Image not found."}), 404
         except Exception as e:
             return str(e), 500
-        
+
+
     def _insert_data(self):
         try:
             data = request.get_json()
             ph = data.get('ph')
             soil = data.get('soil')
-            self.__model.insert_data(ph, soil)
-            
+            self.__db_model.insert_data(ph, soil)
+
             return jsonify({'message': 'Data saved successfully'}), 201
         except Exception as e:
             return str(e), 500
-        
+
     def _find_data(self):
         try:
-            data = self.__model.find_data()
-            return jsonify(data), 201
+            data = self.__db_model.find_data()
+            return jsonify(data), 200
         except Exception as e:
             return str(e), 500
 
