@@ -8,7 +8,6 @@ class Model():
     def __init__(self):
         self.__client = MongoClient(os.environ.get("MONGODB_API"),  server_api=ServerApi('1'))
         # self.__client = MongoClient('mongodb+srv://elchilz:Elco1001@smartfarm.zrqtr.mongodb.net/?retryWrites=true&w=majority&appName=smartfarm',  server_api=ServerApi('1'))
-        self.__url = 'https://res.cloudinary.com/dkozkdqen/image/upload/'
         try:
             self.__database = self.__client.get_database('smartfarm')
             self.__collection()
@@ -29,10 +28,7 @@ class Model():
             'chat_id' : chat_id,
             'pot_id' : pot_id
             }
-
         self.__collection_user.insert_one(user)
-        self.__insert_image(pot_id)
-
 
     def is_user(self, pot_id):
         user = self.__collection_user.find_one({'pot_id' : pot_id}, {'_id': 0,'chat_id' : 1}) 
@@ -41,10 +37,10 @@ class Model():
         else:
             return True       
 
-    def __insert_image(self, pot_id):
+    def insert_image(self, pot_id, url):
         image = {
             'pot_id' : pot_id,
-            'url' : f'{self.__url}{pot_id}'
+            'url' : url
         }
 
         self.__collection_image.insert_one(image)

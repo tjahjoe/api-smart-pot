@@ -25,7 +25,8 @@ class Controller:
             chat_id = data.get('chat_id')
             pot_id = data.get('pot_id')
             self.__db_model.insert_user(chat_id, pot_id)
-            self.__cloudinary.upload_image('white.jpg', public_id=str(pot_id))
+            url = self.__cloudinary.upload_image('white.jpg', public_id=str(pot_id))
+            self.__db_model.insert_image(pot_id, url)
 
             return jsonify({'message': 'User saved successfully'}), 201
         except Exception as e:
@@ -67,7 +68,6 @@ class Controller:
                 ph = data.get('ph')
                 soil = data.get('soil')
                 self.__db_model.insert_data(ph, soil)
-
                 return jsonify({'message': 'Data saved successfully'}), 201
             else:
                 return jsonify({"message": "User not found."}), 404
