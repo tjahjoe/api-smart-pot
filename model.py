@@ -53,7 +53,7 @@ class Model():
         else:
             return image['url']
 
-    def insert_data(self, ph, soil):
+    def insert_data(self, id, ph, soil):
         now = datetime.now()
         year = now.year
         month = now.month
@@ -62,6 +62,7 @@ class Model():
         minute = now.minute
 
         data = {
+            'pot_id' : id,
             'year' : year,
             'month' : month,
             'day' : day,

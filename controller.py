@@ -67,7 +67,7 @@ class Controller:
                 data = request.get_json()
                 ph = data.get('ph')
                 soil = data.get('soil')
-                self.__db_model.insert_data(ph, soil)
+                self.__db_model.insert_data(id, ph, soil)
                 return jsonify({'message': 'Data saved successfully'}), 201
             else:
                 return jsonify({"message": "User not found."}), 404
