@@ -77,7 +77,7 @@ class Controller:
     def _find_data(self, id):
         try:
             id = int(id)
-            if self.__db_model.is_user():
+            if self.__db_model.is_user(id):
                 data = self.__db_model.find_data()
                 return jsonify(data), 200
             else:
