@@ -38,9 +38,9 @@ class Controller:
             if self.__db_model.is_user(id):
                 image_bytes = request.data
                 url = self.__cloudinary.upload_image(image_bytes, public_id=str(id))
-                return jsonify({"message": "Image processed and uploaded successfully!", "url": url}), 200
+                return jsonify({'message': 'Image processed and uploaded successfully!', 'url': url}), 200
             else:
-                return jsonify({"message": "User not found."}), 404
+                return jsonify({'message': 'User not found.'}), 404
         except Exception as e:
             return str(e), 500
 
@@ -53,9 +53,9 @@ class Controller:
                 if response.status_code == 200:
                     return send_file(io.BytesIO(response.content), mimetype='image/jpeg')
                 else:
-                    return jsonify({"message": "Image not found."}), 404
+                    return jsonify({'message': 'Image not found.'}), 404
             else:
-                return jsonify({"message": f"User not found.{self.__db_model.is_user(id)}"}), 404
+                return jsonify({'message': f'User not found.'}), 404
         except Exception as e:
             return str(e), 500
 
@@ -70,7 +70,7 @@ class Controller:
                 self.__db_model.insert_data(id, ph, soil)
                 return jsonify({'message': 'Data saved successfully'}), 201
             else:
-                return jsonify({"message": "User not found."}), 404
+                return jsonify({'message': 'User not found.'}), 404
         except Exception as e:
             return str(e), 500
 
@@ -81,7 +81,7 @@ class Controller:
                 data = self.__db_model.find_data(id)
                 return jsonify(data), 200
             else:
-                return jsonify({"message": "User not found."}), 404
+                return jsonify({'message': 'User not found.'}), 404
         except Exception as e:
             return str(e), 500
         

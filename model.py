@@ -6,7 +6,7 @@ import os
 
 class Model():
     def __init__(self):
-        self.__client = MongoClient(os.environ.get("MONGODB_API"),  server_api=ServerApi('1'))
+        self.__client = MongoClient(os.environ.get('MONGODB_API'),  server_api=ServerApi('1'))
         try:
             self.__database = self.__client.get_database('smartfarm')
             self.__collection()
