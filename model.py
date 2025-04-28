@@ -6,8 +6,8 @@ import os
 
 class Model():
     def __init__(self):
-        # self.__client = MongoClient(os.environ.get("MONGODB_API"),  server_api=ServerApi('1'))
-        self.__client = MongoClient('mongodb+srv://elchilz:Elco1001@smartfarm.zrqtr.mongodb.net/?retryWrites=true&w=majority&appName=smartfarm',  server_api=ServerApi('1'))
+        self.__client = MongoClient(os.environ.get("MONGODB_API"),  server_api=ServerApi('1'))
+        # self.__client = MongoClient('mongodb+srv://elchilz:Elco1001@smartfarm.zrqtr.mongodb.net/?retryWrites=true&w=majority&appName=smartfarm',  server_api=ServerApi('1'))
         self.__url = 'https://res.cloudinary.com/dkozkdqen/image/upload/'
         try:
             self.__database = self.__client.get_database('smartfarm')
