@@ -75,8 +75,8 @@ class Model():
         
         self.__collection_data.insert_one(data)
     
-    def find_data(self):
-        cursor = self.__collection_data.find({}, {'_id': 0, 'data.ph': 1, 'data.soil': 1}).sort('_id', -1).limit(10)
+    def find_data(self, pot_id):
+        cursor = self.__collection_data.find({'pot_id' : pot_id}, {'_id': 0, 'data.ph': 1, 'data.soil': 1}).sort('_id', -1).limit(10)
         raw_data = list(cursor)
 
         df = pd.json_normalize(raw_data) 

@@ -78,7 +78,7 @@ class Controller:
         try:
             id = int(id)
             if self.__db_model.is_user(id):
-                data = self.__db_model.find_data()
+                data = self.__db_model.find_data(id)
                 return jsonify(data), 200
             else:
                 return jsonify({"message": "User not found."}), 404
