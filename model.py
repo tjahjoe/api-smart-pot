@@ -93,7 +93,7 @@ class Model():
         df = pd.json_normalize(raw_data)
         return df['pot_id'].values.tolist()
 
-    def get_all_chat_ids(self):
+    def find_users(self):
         users = self.__collection_user.find({}, {'_id': 0, 'chat_id': 1})
         raw_data = list(users)
         df = pd.json_normalize(raw_data)
