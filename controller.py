@@ -19,6 +19,9 @@ class Controller:
         self._app.add_url_rule('/insert/data/<id>', view_func=self._insert_data, methods=['POST'])
         self._app.add_url_rule('/find/data/<id>', view_func=self._find_data, methods=['GET'])
         self._app.add_url_rule('/find/pot/<id>', view_func=self._find_pot, methods=['GET'])
+        self._app.add_url_rule('/find/users', view_func=self._get_all_chat_ids, methods=['GET'])
+
+
 
     def _insert_user(self):
         try:
@@ -91,6 +94,13 @@ class Controller:
             id = int(id)
             pot = self.__db_model.find_pot(id)
             return jsonify(pot), 200
+        except Exception as e:
+            return str(e), 500
+    
+    def _get_all_chat_ids(self):
+        try:
+            chat_ids = self.__db_model.get_all_chat_ids()
+            return jsonify({'chat_ids': chat_ids}), 200
         except Exception as e:
             return str(e), 500
 
