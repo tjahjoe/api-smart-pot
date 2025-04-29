@@ -88,7 +88,7 @@ class Model():
     
 
     def find_pot(self, id):
-        pot = self.__collection_user.find({'chat_id' : 1111}, {'_id': 0,'pot_id' : 1})
+        pot = self.__collection_user.find({'chat_id' : id}, {'_id': 0,'pot_id' : 1})
         raw_data = list(pot)
         df = pd.json_normalize(raw_data)
         return df['pot_id'].values.tolist()
