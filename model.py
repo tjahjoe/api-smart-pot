@@ -95,5 +95,7 @@ class Model():
 
     def get_all_chat_ids(self):
         users = self.__collection_user.find({}, {'_id': 0, 'chat_id': 1})
-        return [user['chat_id'] for user in users if 'chat_id' in user]
+        raw_data = list(users)
+        df = pd.json_normalize(raw_data)
+        return df['pot_id'].unique().tolist()
 
