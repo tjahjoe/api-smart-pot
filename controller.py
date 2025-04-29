@@ -88,6 +88,7 @@ class Controller:
         
     def _find_pot(self, id):
         try:
+            id = int(id)
             pot = self.__db_model.find_pot(id)
             return jsonify(pot), 200
         except Exception as e:
