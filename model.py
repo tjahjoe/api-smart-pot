@@ -85,3 +85,10 @@ class Model():
         df = df[['data.ph', 'data.soil']].iloc[::-1]  
 
         return df.rename(columns={'data.ph': 'ph', 'data.soil': 'soil'}).to_dict(orient='records')
+    
+
+    def find_pot(self, id):
+        pot = self.__collection_user.find({'chat_id' : 1111}, {'_id': 0,'pot_id' : 1})
+        raw_data = list(pot)
+        df = pd.json_normalize(raw_data)
+        return df['pot_id'].values.tolist()

@@ -18,6 +18,7 @@ class Controller:
         self._app.add_url_rule('/get/image/<id>', view_func=self._get_image, methods=['GET'])
         self._app.add_url_rule('/insert/data/<id>', view_func=self._insert_data, methods=['POST'])
         self._app.add_url_rule('/find/data/<id>', view_func=self._find_data, methods=['GET'])
+        self._app.add_url_rule('/find/pot/<id>', view_func=self._find_pot, methods=['GET'])
 
     def _insert_user(self):
         try:
@@ -85,5 +86,12 @@ class Controller:
         except Exception as e:
             return str(e), 500
         
+    def _find_pot(self, id):
+        try:
+            pot = self.__db_model.find_pot(id)
+            return jsonify(pot), 200
+        except Exception as e:
+            return str(e), 500
+
     def run(self):
         self._app.run(host='0.0.0.0')
