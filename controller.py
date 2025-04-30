@@ -20,6 +20,7 @@ class Controller:
         self._app.add_url_rule('/find/data/<id>', view_func=self._find_data, methods=['GET'])
         self._app.add_url_rule('/find/pot/<id>', view_func=self._find_pot, methods=['GET'])
         self._app.add_url_rule('/find/users', view_func=self._find_users, methods=['GET'])
+        self._app.add_url_rule('/destroy/pot', view_func=self._insert_data, methods=['POST'])
 
 
 
@@ -101,6 +102,20 @@ class Controller:
         try:
             chat_ids = self.__db_model.find_users()
             return jsonify({'chat_ids': chat_ids}), 200
+        except Exception as e:
+            return str(e), 500
+        
+    def _destroy_pot(self):
+        try:
+            data = request.get_json()
+            chat_id = data.get('chat_id')
+            pot_id = data.get('pot_id')
+            condition = self.__db_model.destroy_pot(chat_id, pot_id)
+            if condition:
+                self.__cloudinary.destroy_image(public_id=str(pot_id))
+                return jsonify({'message': 'Pot destroy successfully'}), 201
+            else:
+                return jsonify({'message': 'User not found.'}), 404
         except Exception as e:
             return str(e), 500
 

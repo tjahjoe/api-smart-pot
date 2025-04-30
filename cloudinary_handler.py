@@ -26,4 +26,8 @@ class CloudinaryHandler:
             version=None
         )
         return url
+    
+    def destroy_image(self, public_id):
+        result = cloudinary.uploader.destroy(public_id, invalidate=True)
+        return result
 

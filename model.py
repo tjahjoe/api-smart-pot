@@ -98,4 +98,15 @@ class Model():
         raw_data = list(users)
         df = pd.json_normalize(raw_data)
         return df['chat_id'].unique().tolist()
+    
+    def destroy_pot(self, chat_id, pot_id):
+        pot = self.__collection_user.find({'chat_id' : chat_id, 'pot_id' : pot_id}, {'_id': 0,'pot_id' : 1})
+        if pot == None:
+            return False
+        else:
+            self.__collection_data.delete_many({'pot_id' : pot_id})
+            self.__collection_image.delete_one({'pot_id' : pot_id})
+            self.__collection_user.delete_one({'pot_id' : pot_id})
+
+            return True
 
