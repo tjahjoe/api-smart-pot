@@ -20,7 +20,7 @@ class Controller:
         self._app.add_url_rule('/find/data/<id>', view_func=self._find_data, methods=['GET'])
         self._app.add_url_rule('/find/pot/<id>', view_func=self._find_pot, methods=['GET'])
         self._app.add_url_rule('/find/users', view_func=self._find_users, methods=['GET'])
-        self._app.add_url_rule('/destroy/pot', view_func=self._insert_data, methods=['POST'])
+        self._app.add_url_rule('/destroy/pot', view_func=self._destroy_pot, methods=['POST'])
 
 
 
